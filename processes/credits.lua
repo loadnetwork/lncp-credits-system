@@ -4,7 +4,7 @@ local json = require('json')
 -- Global variables
 if not Name then Name = 'lncp-credits-system-ao' end 
 -- vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0
-if Admin ~= ao.id then Admin = ao.id end
+if Admin ~= 'vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0' then Admin = 'vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0' end
 -- dumdum: jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4 (testing)
 -- ao: 0syT13r0s0tgPmIed95bJnuSqaD29HQNN8D3ElLSrsc
 if not PaymentTokenId then PaymentTokenId = 'jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4' end
@@ -239,12 +239,12 @@ Handlers.add("BuyCredits",
         local purchasedCredits = quantity / PaymentTokenUsdPrice
         Credits[sender] = Credits[sender] + purchasedCredits
         
-        print("Received " .. quantity .. " payment tokens from " .. sender .. "exchanged for " .. purchasedCredits .. "credits")
+        print("Received " .. quantity .. " payment tokens from " .. sender .. " exchanged for " .. purchasedCredits .. " credits")
         print("User credits: " .. Credits[sender])
         
         ao.send({
             Target = sender,
-            Data = "Successfully purchased " .. purchasedCredits .. "credits",
+            Data = "Successfully purchased " .. purchasedCredits .. " credits",
             Tags = {
                 Action = "Receipt-Confirmation",
                 PurchasedCredits = tostring(purchasedCredits),
