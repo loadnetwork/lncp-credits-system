@@ -3,8 +3,7 @@ local json = require('json')
 
 -- Global variables
 if not Name then Name = 'lncp-credits-system-ao' end 
--- vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0
-if Admin ~= 'vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0' then Admin = 'vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0' end
+if Admin ~= '6vs8jt69nO8wSBQP7YzvV4QWs5WjtJPBWPIpC_mU7DM' then Admin = '6vs8jt69nO8wSBQP7YzvV4QWs5WjtJPBWPIpC_mU7DM' end
 -- dumdum: jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4 (testing)
 -- ao: 0syT13r0s0tgPmIed95bJnuSqaD29HQNN8D3ElLSrsc
 if not PaymentTokenId then PaymentTokenId = 'jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4' end
