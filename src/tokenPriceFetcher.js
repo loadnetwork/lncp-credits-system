@@ -1,13 +1,15 @@
 /**
  * Payment Token Price Fetcher
- * Fetches the latest payment token price from Arweave using RedStone oracles
+ * Fetches the latest payment token price from Arweave using redstone oracles
  * Payment token: $AO
  */
 
+import { ARWEAVE_GATEWAY_URL } from "./constants.js";
+
 class TokenPriceFetcher {
     constructor() {
-        this.arweaveGraphQLEndpoint = 'https://arweave.net/graphql';
-        this.arweaveDataEndpoint = 'https://arweave.net';
+        this.arweaveGraphQLEndpoint = `${ARWEAVE_GATEWAY_URL}/graphql`;
+        this.arweaveDataEndpoint = ARWEAVE_GATEWAY_URL;
     }
 
     /**
@@ -69,7 +71,7 @@ class TokenPriceFetcher {
                     'Accept': 'application/json',
                     'Connection': 'keep-alive',
                     'DNT': '1',
-                    'Origin': 'https://arweave.net'
+                    'Origin': ARWEAVE_GATEWAY_URL
                 },
                 body: JSON.stringify(this.getGraphQLQuery())
             });

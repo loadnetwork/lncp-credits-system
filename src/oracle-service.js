@@ -6,14 +6,15 @@
 import { connect, createDataItemSigner } from '@permaweb/aoconnect';
 import dotenv from 'dotenv';
 import TokenPriceFetcher from './tokenPriceFetcher.js';
+import { PROCESS_ID, CRONJOB_INTERVAL } from './constants.js';
 
 dotenv.config();
 
 class AOPriceOracleService {
     constructor() {
         this.fetcher = new TokenPriceFetcher();
-        this.processId = process.env.PROCESS_ID || 'pgHv7E6zuhHXEXJ63JilTfu9cGnD60ISUWab8V2uAIs';
-        this.updateInterval = parseInt(process.env.UPDATE_INTERVAL) || 60000; // 1 minute in milliseconds
+        this.processId = PROCESS_ID;
+        this.updateInterval = CRONJOB_INTERVAL;
         this.intervalId = null;
         this.isRunning = false;
         
@@ -217,7 +218,7 @@ async function main() {
 // Export for use in other modules
 export default AOPriceOracleService;
 
-// Run the service if this file is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-    main();
-}
+// // Run the service if this file is executed directly
+// if (import.meta.url === `file://${process.argv[1]}`) {
+//     main();
+// }
