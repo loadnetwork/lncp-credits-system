@@ -1,0 +1,34 @@
+{
+  "name": "lncp-credits-system",
+  "version": "1.0.0",
+  "description": "LNCP Credits System with AO Token Price Fetcher and Oracle Service",
+  "type": "module",
+  "main": "src/tokenPriceFetcher.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "ao",
+    "token",
+    "price",
+    "arweave",
+    "redstone",
+    "oracle",
+    "cryptocurrency",
+    "aoconnect",
+    "heroku"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loadnetwork/lncp-credits-system.git"
+  },
+  "dependencies": {
+    "@permaweb/aoconnect": "^0.0.57",
+    "dotenv": "^16.4.5"
+  }
+}
