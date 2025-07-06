@@ -35,8 +35,26 @@ Handlers.add(
     Handlers.utils.hasMatchingTag("Action", "UpdatePaymentTokenPrice"),
     function(msg)
         local new_price = tonumber(msg.Tags.Price)
-        assert(msg.From == Admin, "Error invalid caller")
-        assert(new_price > 0, "Error invalid payment token price")
+
+        if msg.From ~= Admin then
+            msg.reply(
+                {
+                    Data = "Error: Only process owner can update payment token price",
+                    Error = "UNAUTHORIZED"
+                }
+            )
+            return
+        end
+        
+        if new_price <= 0 then 
+            msg.reply(
+                {
+                    Data = "Error invalid payment token price",
+                    Error = "INVALID_INPUT"
+                }
+            )
+            return
+        end
 
         PaymentTokenUsdPrice = new_price
 
@@ -52,8 +70,8 @@ Handlers.add(
 -- 2. withdraw process payment token balance
 
 Handlers.add(
-    "WithdrawPaymentsTokens",
-    {Action = "WithdrawPaymentsTokens"},
+    "WithdrawPaymentTokens",
+    {Action = "WithdrawPaymentTokens"},
     function(msg)
         -- Check if sender is the process owner
         if msg.From ~= Admin then
@@ -108,7 +126,16 @@ Handlers.add(
     "BatchReduceCredits",
     {Action = "BatchReduceCredits"},
     function(msg)
-        assert(msg.From == Admin, "ERROR invaid caller")
+
+        if msg.From ~= Admin then
+            msg.reply(
+                {
+                    Data = "Error: Only process owner can batch reduce credits",
+                    Error = "UNAUTHORIZED"
+                }
+            )
+            return
+        end
 
         -- Parse batch data from msg.Data
         local success, batchData = pcall(json.decode, msg.Data)
@@ -178,7 +205,7 @@ Handlers.add(
                     }
                 ),
                 Tags = {
-                    Action = "BatchReduceCredits-Response",
+                    Action = "Batch-Reduce-Credits-Response",
                     Processed = tostring(results.processed),
                     Errors = tostring(#results.errors)
                 }
@@ -194,11 +221,21 @@ Handlers.add(
     "Balance",
     Handlers.utils.hasMatchingTag("Action", "Balance"),
     function(msg)
-        assert(type(msg.Tags.Target) == "string", "Target Tag is required!")
+
+        if type(msg.Tags.Target) ~= "string" then 
+            msg.reply({
+                Data = "Error: Balance action require a 'Target' tag",
+                Error = "MISSING_TAG"
+            })
+            return
+        end
+
         local bal = "0"
+
         if Credits[msg.Tags.Target] then
             bal = tostring(Credits[msg.Tags.Target])
         end
+
         ao.send(
             {
                 Target = msg.From,
@@ -224,8 +261,14 @@ Handlers.add(
     "Transfer",
     Handlers.utils.hasMatchingTag("Action", "Transfer"),
     function(msg)
-        assert(type(msg.Tags.Recipient) == "string", "Recipient is required!")
-        assert(type(msg.Tags.Quantity) == "string", "Quantity is required!")
+
+        if type(msg.Tags.Recipient) ~= "string" or type(msg.Tags.Quantity) ~= "string" then 
+            msg.reply({
+                Data = "Error: Transfer action require 'Recipient' and 'Quantity' tags",
+                Error = "MISSING_TAG"
+            })
+            return
+        end
 
         if not Credits[msg.From] then
             Credits[msg.From] = 0
@@ -236,7 +279,14 @@ Handlers.add(
         end
 
         local qty = tonumber(msg.Tags.Quantity)
-        assert(type(qty) == "number", "qty must be number")
+
+        if type(qty) ~= "number" then 
+            msg.reply({
+                Data = "Error: invalid quantity number passed",
+                Error = "INVALID_INPUT"
+            })
+            return
+        end
 
         if Credits[msg.From] >= qty then
             Credits[msg.From] = Credits[msg.From] - qty
@@ -274,10 +324,19 @@ Handlers.add(
         local sender = msg.Tags.Sender or msg.From
         local quantity = tonumber(msg.Tags.Quantity or msg.Data) / (10 ^ PaymentTokenDenomination)
 
-        assert(PaymentTokenUsdPrice > 0, "Error buying credits given invalid payment token price")
+        if PaymentTokenUsdPrice <= 0 then 
+            msg.reply({
+                Data = "Error: invalid token price USD - requires admin attention",
+                Error = "INVALID_INPUT"
+            })
+            return
+        end
 
-        if not quantity or quantity <= 0 then
-            print("Invalid payment token quantity received")
+        if not quantity or quantity <= 0 then 
+            msg.reply({
+                Data = "Error: invalid token price USD",
+                Error = "INVALID_INPUT"
+            })
             return
         end
 
