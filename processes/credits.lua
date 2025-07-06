@@ -2,7 +2,7 @@
 local json = require("json")
 
 -- Global variables
-if not Name then
+if Name ~= "lncp-credits-system-ao" then
     Name = "lncp-credits-system-ao"
 end
 if Admin ~= "6vs8jt69nO8wSBQP7YzvV4QWs5WjtJPBWPIpC_mU7DM" then
@@ -10,18 +10,18 @@ if Admin ~= "6vs8jt69nO8wSBQP7YzvV4QWs5WjtJPBWPIpC_mU7DM" then
 end
 -- dumdum: jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4 (testing)
 -- ao: 0syT13r0s0tgPmIed95bJnuSqaD29HQNN8D3ElLSrsc
-if not PaymentTokenId then
+if PaymentTokenId ~= "jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4" then
     PaymentTokenId = "jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4"
 end
-if not PaymentTokenUsdPrice then
-    PaymentTokenUsdPrice = 0
-end
-if not PaymentTokenTicker then
+if PaymentTokenTicker ~= "AO" then
     PaymentTokenTicker = "AO"
 end
 -- 18 for dumdum
-if not PaymentTokenDenomination then
+if PaymentTokenDenomination ~= 18 then
     PaymentTokenDenomination = 18
+end
+if not PaymentTokenUsdPrice then
+    PaymentTokenUsdPrice = 0
 end
 if not Credits then
     Credits = {}
