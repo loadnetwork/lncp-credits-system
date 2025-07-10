@@ -27,6 +27,36 @@ if not Credits then
     Credits = {}
 end
 
+-- Utils functions --
+
+-- Arweave address validator
+function is_valid_arweave_address(address)
+    if type(address) ~= "string" then
+        return false
+    end
+    
+    if #address ~= 43 then
+        return false
+    end
+    
+    local pattern = "^[A-Za-z0-9_-]+$"
+    return string.match(address, pattern) ~= nil
+end
+
+-- Ethereum address validator
+function is_valid_ethereum_address(address)
+    if type(address) ~= "string" then
+        return false
+    end
+    
+    if #address ~= 42 then
+        return false
+    end
+    
+    local pattern = "^0x[0-9a-fA-F]+$"
+    return string.match(address, pattern) ~= nil
+end
+
 -- Admin functions --
 
 -- 1. update payment token USD price
@@ -266,6 +296,14 @@ Handlers.add(
             msg.reply({
                 Data = "Error: Transfer action require 'Recipient' and 'Quantity' tags",
                 Error = "MISSING_TAG"
+            })
+            return
+        end
+
+        if not is_valid_arweave_address(msg.Tags.Recipient) or not is_valid_ethereum_address(msg.Tags.Recipient) then 
+            msg.reply({
+                Data = "Error: Invalid recipient address formar - only Arweave or Ethereum",
+                Error = "INVALID_ADDRESS_FORMAT"
             })
             return
         end
