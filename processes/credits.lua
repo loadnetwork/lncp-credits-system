@@ -8,17 +8,14 @@ end
 if Admin ~= "6vs8jt69nO8wSBQP7YzvV4QWs5WjtJPBWPIpC_mU7DM" then
     Admin = "6vs8jt69nO8wSBQP7YzvV4QWs5WjtJPBWPIpC_mU7DM"
 end
--- dumdum: jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4 (testing)
--- ao: 0syT13r0s0tgPmIed95bJnuSqaD29HQNN8D3ElLSrsc
-if PaymentTokenId ~= "jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4" then
-    PaymentTokenId = "jtGHIv6MRIwUSlxVUTDwX7X0gYEGKQynIqvkelIOdL4"
+if PaymentTokenId ~= "0syT13r0s0tgPmIed95bJnuSqaD29HQNN8D3ElLSrsc" then
+    PaymentTokenId = "0syT13r0s0tgPmIed95bJnuSqaD29HQNN8D3ElLSrsc"
 end
 if PaymentTokenTicker ~= "AO" then
     PaymentTokenTicker = "AO"
 end
--- 18 for dumdum
-if PaymentTokenDenomination ~= 18 then
-    PaymentTokenDenomination = 18
+if PaymentTokenDenomination ~= 12 then
+    PaymentTokenDenomination = 12
 end
 if not PaymentTokenUsdPrice then
     PaymentTokenUsdPrice = 0
@@ -382,7 +379,7 @@ Handlers.add(
         if not Credits[sender] then
             Credits[sender] = 0
         end
-        local purchasedCredits = quantity / PaymentTokenUsdPrice
+        local purchasedCredits = quantity * PaymentTokenUsdPrice
         Credits[sender] = Credits[sender] + purchasedCredits
 
         print(
